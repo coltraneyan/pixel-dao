@@ -21,9 +21,8 @@ contract PixelDAO {
         string memory applicantName,
         string memory applicantColourOne,
         string memory applicantColourTwo,
-        string memory applicantPixelMap,
-        address applicantAddress
-    ) public newMembersOnly(applicantAddress) {
+        string memory applicantPixelMap
+    ) public newMembersOnly(msg.sender) {
         Member memory newMember = Member(
             applicantName,
             applicantColourOne,
@@ -32,9 +31,9 @@ contract PixelDAO {
             true
         );
 
-        searchMemberList[applicantAddress] = newMember;
+        searchMemberList[msg.sender] = newMember;
         memberCount += 1;
-        return addressList.push(applicantAddress);
+        return addressList.push(msg.sender);
     }
 
     modifier newMembersOnly(address newAddress) {
@@ -44,6 +43,6 @@ contract PixelDAO {
     }
 
     constructor() {
-        addMember("The President", "white", "white", "0000000000", msg.sender);
+        addMember("The President", "white", "white", "0000000000");
     }
 }
